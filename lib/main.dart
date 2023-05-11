@@ -1,4 +1,5 @@
 import 'package:app_olx/RouteGenerator.dart';
+import 'package:app_olx/tests/mascaras_padroes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,7 @@ void main() async {
   await Firebase.initializeApp();
 
   runApp(MaterialApp(
-    home: Home(),
+    home: MascarasPadroes(),
     debugShowCheckedModeBanner: false,
     theme: ThemeData(
       primaryColor: Color(0xff9c27b0),

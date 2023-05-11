@@ -20,7 +20,7 @@ class _HomeState extends State<Home> {
         Navigator.pushNamed(context, '/meus-anuncios');
         break;
       case "Entrar":
-        Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+        Navigator.pushNamed(context, '/login');
         break;
       case "Sair":
         _deslogarUsuario();
@@ -32,7 +32,7 @@ class _HomeState extends State<Home> {
   _deslogarUsuario(){
     FirebaseAuth auth = FirebaseAuth.instance;
     auth.signOut();
-    Navigator.pushNamed(context, '/login');
+    Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
   }
 
 

@@ -1,8 +1,9 @@
+import 'package:app_olx/View/Widgets/BotaoCustomizado.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../Models/Usuario.dart';
-import 'inputCustomizado.dart';
+import 'Widgets/inputCustomizado.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -35,7 +36,7 @@ class _LoginState extends State<Login> {
             }
           );
 
-          Navigator.pushReplacementNamed(context, '/');
+          Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
 
         }
     );
@@ -45,10 +46,10 @@ class _LoginState extends State<Login> {
 
     FirebaseAuth auth = FirebaseAuth.instance;
     
-    auth.signInWithEmailAndPassword(email: usuario.email, password: usuario.email).then(
+    auth.signInWithEmailAndPassword(email: usuario.email, password: usuario.senha).then(
         (firebaseUser){
 
-          Navigator.pushReplacementNamed(context, '/');
+          Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
 
         }
     );
@@ -128,17 +129,11 @@ class _LoginState extends State<Login> {
                     const Text('Cadastrar'),
                   ],
                 ),
-                ElevatedButton(
+                BotaoCustomizado(
+                    texto: _cadastrar ? 'Cadastrar':'Entrar',
                     onPressed: (){
                       _validarCampo();
-                    },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xff9c27b0),
-                    padding: EdgeInsets.fromLTRB(32, 16, 32, 16),
-                  ),
-                    child: _cadastrar ? const Text('Cadastrar', style: TextStyle(color: Colors.white, fontSize: 20),) :
-                      const Text('Entrar', style: TextStyle(color: Colors.white, fontSize: 20),),
-                ),
+                    }),
                 Padding(
                   padding: EdgeInsets.only(top: 20),
                   child: Text(_mensagemErro, style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 18),),

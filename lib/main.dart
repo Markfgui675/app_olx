@@ -13,7 +13,7 @@ void main() async {
   await Firebase.initializeApp();
 
   runApp(MaterialApp(
-    home: Formularios(),
+    home: Home(),
     debugShowCheckedModeBanner: false,
     theme: ThemeData(
       primaryColor: Color(0xff9c27b0),

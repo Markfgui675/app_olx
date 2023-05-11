@@ -16,6 +16,13 @@ class Usuario{
     return map;
   }
 
+
+  String get nome => _nome!;
+
+  set nome(String value) {
+    _nome = value;
+  }
+
   String get senha => _senha!;
 
   set senha(String value) {
@@ -26,12 +33,6 @@ class Usuario{
 
   set email(String value) {
     _email = value;
-  }
-
-  String get nome => _nome!;
-
-  set nome(String value) {
-    _nome = value;
   }
 
   String get idUsuario => _idUsuario!;

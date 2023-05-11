@@ -1,8 +1,10 @@
+import 'package:app_olx/View/MeusAnuncios.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'View/Home.dart';
 import 'View/Login.dart';
+import 'View/NovoAnuncio.dart';
 
 class RouteGenerator{
 
@@ -16,6 +18,12 @@ class RouteGenerator{
 
       case "/login":
         return MaterialPageRoute(builder: (_) => Login());
+
+      case "/meus-anuncios":
+        return MaterialPageRoute(builder: (_) => MeusAnuncios());
+
+      case "/novo-anuncio":
+        return MaterialPageRoute(builder: (_) => NovoAnuncio());
 
       default:
         _erroRota();

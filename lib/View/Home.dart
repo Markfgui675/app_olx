@@ -70,6 +70,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(
         title: Text('OLX'),
+        backgroundColor: Color(0xff9c27b0),
         actions: [
           PopupMenuButton<String>(
             onSelected: _escolhaMenuitem,

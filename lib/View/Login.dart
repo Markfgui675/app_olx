@@ -31,7 +31,6 @@ class _LoginState extends State<Login> {
           db.collection('usuarios').doc(user!.uid).set(
             {
               'id':user.uid,
-              'nome':usuario.nome,
               'email':usuario.email
             }
           );

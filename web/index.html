@@ -29,7 +29,7 @@
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
-  <title>app_olx</title>
+  <title>App Olx</title>
   <link rel="manifest" href="manifest.json">
 
   <script>
@@ -54,5 +54,28 @@
       });
     });
   </script>
+  <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyBAoWk8vVd-CTBTMoFJakDZBQQKTq7xeKg",
+    authDomain: "app-olx-37a93.firebaseapp.com",
+    projectId: "app-olx-37a93",
+    storageBucket: "app-olx-37a93.appspot.com",
+    messagingSenderId: "235749811864",
+    appId: "1:235749811864:web:c5b637cef5d678719a12ed",
+    measurementId: "G-68ETDH3F0G"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
 </body>
 </html>

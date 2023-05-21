@@ -14,7 +14,7 @@ class NovoAnuncio extends StatefulWidget {
 
 class _NovoAnuncioState extends State<NovoAnuncio> {
 
-  List<File> _listaImagens = [];
+  List<dynamic> _listaImagens = [];
 
   final _formKey = GlobalKey<FormState>();
 
@@ -61,7 +61,44 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
                     }
 
                     if(_listaImagens.length > 0){
-
+                      return Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 8),
+                        child: GestureDetector(
+                           onTap: (){
+                             showDialog(
+                                 context: context,
+                                 builder: (_){
+                                   return Dialog(
+                                     child: Column(
+                                       mainAxisSize: MainAxisSize.min,
+                                       children: [
+                                         Image.file(_listaImagens[index]),
+                                         TextButton(
+                                             onPressed: (){
+                                               setState(() {
+                                                 _listaImagens.removeAt(index);
+                                               });
+                                               Navigator.pop(context);
+                                             },
+                                             child: Text('Excluir', style: TextStyle(color: Colors.red),)
+                                         )
+                                       ],
+                                     ),
+                                   );
+                                 }
+                             );
+                           },
+                          child: CircleAvatar(
+                            radius: 50,
+                            backgroundImage: FileImage(_listaImagens[index]),
+                            child: Container(
+                              color: Color.fromRGBO(255, 255, 255, 0.4),
+                              alignment: Alignment.center,
+                              child: Icon(Icons.delete, color: Colors.red,),
+                            ),
+                          ),
+                        ),
+                      );
                     }
 
                     return Container();
@@ -86,11 +123,14 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
     final ImagePicker picker = ImagePicker();
     final dynamic image = await picker.pickImage(source: ImageSource.gallery);
 
+    final File? imageFile = File(image.path);
+
     if(image != null){
       setState(() {
-        _listaImagens.add(image);
+        _listaImagens.add(imageFile);
       });
     }
+    print(_listaImagens);
 
   }
 

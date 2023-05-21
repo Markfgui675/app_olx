@@ -1,4 +1,7 @@
 import 'dart:io';
+import 'package:app_olx/View/Widgets/inputCustomizado.dart';
+import 'package:brasil_fields/brasil_fields.dart';
+import 'package:flutter/services.dart';
 import 'package:validadores/validadores.dart';
 import 'package:brasil_fields/modelos/estados.dart';
 import 'package:flutter/material.dart';
@@ -209,9 +212,9 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
                                 _itemSelecionadoEstado = value;
                               },
                               validator: (value){
-                                Validador().
+                                return Validador().
                                   add(Validar.OBRIGATORIO, msg: "Campo obrigatório").
-                                  valido(value, clearNoNumber: true);
+                                  valido(value);
                               },
                           ),
                         )
@@ -231,9 +234,9 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
                               _itemSelecionadoCategoria = value;
                             },
                             validator: (value){
-                              Validador().
+                              return Validador().
                               add(Validar.OBRIGATORIO, msg: "Campo obrigatório").
-                              valido(value, clearNoNumber: true);
+                              valido(value);
                             },
                           ),
                         )
@@ -241,7 +244,65 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
                   ],
                 ),
 
-                Text('Caixas de textos'),
+                Padding(
+                  padding: EdgeInsets.only(bottom: 15, top: 15),
+                  child: InputCustomizado(
+                    hint: 'Título',
+                    inputFormatter: [],
+                    validator: (valor){
+                      return Validador().
+                      add(Validar.OBRIGATORIO, msg: "Campo obrigatório").
+                      valido(valor);
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(bottom: 15),
+                  child: InputCustomizado(
+                    hint: 'Preço',
+                    type: TextInputType.number,
+                    inputFormatter: [
+                      FilteringTextInputFormatter.digitsOnly,
+                      RealInputFormatter(centavos: true)
+                    ],
+                    validator: (valor){
+                      return Validador().
+                      add(Validar.OBRIGATORIO, msg: "Campo obrigatório").
+                      valido(valor);
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(bottom: 15),
+                  child: InputCustomizado(
+                    hint: 'Telefone',
+                    type: TextInputType.phone,
+                    inputFormatter: [
+                      FilteringTextInputFormatter.digitsOnly,
+                      TelefoneInputFormatter()
+                    ],
+                    validator: (valor){
+                      return Validador().
+                        add(Validar.OBRIGATORIO, msg: "Campo obrigatório").
+                        valido(valor);
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(bottom: 15),
+                  child: InputCustomizado(
+                    hint: 'Descrição',
+                    type: TextInputType.text,
+                    maxLines: null,
+                    inputFormatter: [],
+                    validator: (valor){
+                      return Validador().
+                        add(Validar.OBRIGATORIO, msg: "Campo obrigatório").
+                        maxLength(200, msg: 'Máximo de 200 caracteres').
+                        valido(valor);
+                    },
+                  ),
+                ),
 
                 BotaoCustomizado(
                     texto: 'Criar novo anúncio',

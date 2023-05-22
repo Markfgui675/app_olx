@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:app_olx/View/Widgets/inputCustomizado.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/services.dart';
@@ -7,6 +8,7 @@ import 'package:brasil_fields/modelos/estados.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../Models/Anuncio.dart';
 import 'Widgets/BotaoCustomizado.dart';
 
 class NovoAnuncio extends StatefulWidget {
@@ -26,6 +28,8 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
   String? _itemSelecionadoCategoria;
 
   final _formKey = GlobalKey<FormState>();
+
+  late Anuncio _anuncio;
 
   Widget _adicionarImagem(){
     return FormField<List>(
@@ -143,6 +147,37 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
 
   }
 
+  _salvarAnuncio() async {
+
+    //upload imagens no Storage
+    await _uploadImagens();
+    print('Lista imagens: ${_anuncio.fotos.toString()}');
+
+    //salvar anuncio no firestore
+
+  }
+
+  Future _uploadImagens() async {
+    FirebaseStorage storage = FirebaseStorage.instance;
+    Reference raiz = storage.ref();
+
+    for(var imagem in _listaImagens){
+
+      String nomeImagem = DateTime.now().microsecondsSinceEpoch.toString();
+      Reference arquivo = raiz.
+        child('meus_anuncios').
+        child(_anuncio.id).
+        child(nomeImagem);
+
+      UploadTask uploadTask = arquivo.putFile(imagem);
+      TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() => null);
+
+      String url = await taskSnapshot.ref.getDownloadURL();
+      _anuncio.fotos.add(url);
+
+    }
+  }
+
   _carregarItensDropDown(){
 
     //Estados
@@ -175,6 +210,7 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
   void initState() {
     super.initState();
     _carregarItensDropDown();
+    _anuncio = Anuncio();
   }
 
   @override
@@ -203,6 +239,9 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
                           child: DropdownButtonFormField(
                             value: _itemSelecionadoEstado,
                               hint: Text('Estados'),
+                              onSaved: (estado){
+                                _anuncio.estado = estado!;
+                              },
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 20
@@ -225,6 +264,9 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
                           child: DropdownButtonFormField(
                             value: _itemSelecionadoCategoria,
                             hint: Text('Estados'),
+                            onSaved: (categoria){
+                              _anuncio.categoria = categoria!;
+                            },
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 20
@@ -248,6 +290,9 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
                   padding: EdgeInsets.only(bottom: 15, top: 15),
                   child: InputCustomizado(
                     hint: 'Título',
+                    onSaved: (titulo){
+                      _anuncio.titulo = titulo!;
+                    },
                     inputFormatter: [],
                     validator: (valor){
                       return Validador().
@@ -260,6 +305,9 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
                   padding: EdgeInsets.only(bottom: 15),
                   child: InputCustomizado(
                     hint: 'Preço',
+                    onSaved: (preco){
+                      _anuncio.preco = preco!;
+                    },
                     type: TextInputType.number,
                     inputFormatter: [
                       FilteringTextInputFormatter.digitsOnly,
@@ -277,6 +325,9 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
                   child: InputCustomizado(
                     hint: 'Telefone',
                     type: TextInputType.phone,
+                    onSaved: (telefone){
+                      _anuncio.telefone = telefone!;
+                    },
                     inputFormatter: [
                       FilteringTextInputFormatter.digitsOnly,
                       TelefoneInputFormatter()
@@ -293,6 +344,9 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
                   child: InputCustomizado(
                     hint: 'Descrição',
                     type: TextInputType.text,
+                    onSaved: (descricao){
+                      _anuncio.descricao = descricao!;
+                    },
                     maxLines: null,
                     inputFormatter: [],
                     validator: (valor){
@@ -308,6 +362,12 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
                     texto: 'Criar novo anúncio',
                     onPressed: (){
                       if(_formKey.currentState!.validate()){
+
+                        //salva campos
+                        _formKey.currentState!.save();
+
+                        //salva anuncio
+                        _salvarAnuncio();
 
                       }
                     }),

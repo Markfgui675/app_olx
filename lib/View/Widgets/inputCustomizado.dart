@@ -11,6 +11,7 @@ class InputCustomizado extends StatelessWidget {
   final int? maxLines;
   final List<TextInputFormatter> inputFormatter;
   final String? Function(String?)? validator;
+  final String? Function(String?)? onSaved;
 
   InputCustomizado({
       this.controller,
@@ -20,7 +21,8 @@ class InputCustomizado extends StatelessWidget {
       this.type = TextInputType.text,
       required this.inputFormatter,
       this.maxLines,
-      required this.validator
+      this.validator,
+      this.onSaved
     });
 
   @override
@@ -33,6 +35,7 @@ class InputCustomizado extends StatelessWidget {
       maxLines: this.maxLines,
       validator: this.validator,
       inputFormatters: this.inputFormatter,
+      onSaved: this.onSaved,
       style: const TextStyle(
           fontSize: 20
       ),

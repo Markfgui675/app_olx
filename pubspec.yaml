@@ -18,6 +18,7 @@ dependencies:
   cloud_firestore: ^4.4.5 #banco de dados
   firebase_storage: ^11.1.2 #armazenamento arquivos
   brasil_fields: ^0.0.9 #campos padronizados
+  validadores: ^1.0.5
   intl: ^0.17.0 #intl
   cpf_cnpj_validator: 1.0.4 #validador de cpf e cnpj
   image_picker: ^0.8.7+5

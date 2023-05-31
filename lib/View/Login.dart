@@ -109,9 +109,9 @@ class _LoginState extends State<Login> {
                   padding: const EdgeInsets.only(bottom: 32),
                   child: Image.asset('imagens/logo.png', width: 200, height: 150,),
                 ),
-                InputCustomizado(controller: _email, hint: 'Email', autofocus: true, type: TextInputType.emailAddress),
+                InputCustomizado(controller: _email, hint: 'Email', autofocus: true, type: TextInputType.emailAddress, inputFormatter: [], validator: (valor) {  },),
                 const SizedBox(height: 10,),
-                InputCustomizado(controller: _senha, hint: 'Senha', type: TextInputType.text, obscure: true,),
+                InputCustomizado(controller: _senha, hint: 'Senha', type: TextInputType.text, obscure: true, inputFormatter: [], validator: (valor) {  },),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
